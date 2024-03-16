@@ -1,0 +1,29 @@
+{
+  "name": "tw-trsf-ebp",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npx parcel build index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "@wagmi/connectors": "^4.1.14",
+    "@wagmi/core": "^2.6.5",
+    "@web3modal/wagmi": "^4.0.13",
+    "dotenv": "^16.4.5",
+    "viem": "^2.7.20"
+  },
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.10.3",
+    "@parcel/transformer-jsonld": "^2.10.3",
+    "crypto-browserify": "^3.12.0",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "vm-browserify": "^1.1.2"
+  }
+}
