@@ -1,6 +1,11 @@
-const Moralis = require("moralis").default;
-const { EvmChain } = require("@moralisweb3/common-evm-utils");
-import { DEFAULT_TOKEN_ABI } from "./../settings.json";
+import * as MoralisOBJ from "moralis";
+import { EvmChain } from "@moralisweb3/common-evm-utils";
+
+// const Moralis = require("moralis").default;
+// const { EvmChain } = require("@moralisweb3/common-evm-utils");
+import TOKEN_ABI from "../settings.json";
+
+let Moralis = MoralisOBJ.default;
 
 let isMoralisInit = false;
 
@@ -8,12 +13,18 @@ const arrCH = {
     1: "ETHEREUM",
     56: "BSC",
     137: "POLYGON",
+    43114: "AVALANCHE",
+    250: "FANTOM",
+    25: "CRONOS",
+    42161: "ARBITRUM",
+    8453: "BASE",
+    10: "OPTIMISM",
 };
 
 const getTokensOwned = async (address, ch) => {
     if (!isMoralisInit) {
         await Moralis.start({
-            apiKey: process.env.MORALIS_API_KEY,
+            apiKey: import.meta.env.VITE_MORALIS_API_KEY,
         });
         isMoralisInit = true;
     }
@@ -62,17 +73,19 @@ const getTokenPrice = async (address, ch) => {
 
 const getContractABI = async (address) => {
     const tokenABI = await fetch(
-        `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}&apikey=${process.env.ETHERSCAN_API_KEY}`
+        `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}&apikey=${
+            import.meta.env.VITE_ETHERSCAN_API_KEY
+        }`
     )
         .then((res) => res.json())
         .then((res) => res.result)
         .catch((e) => {
-            return DEFAULT_TOKEN_ABI;
-            // return DAPP_CONFIG.DEFAULT_TOKEN_ABI;
+            return TOKEN_ABI;
+            // return DAPP_CONFIG.TOKEN_ABI;
         });
     return tokenABI === "Invalid Address format"
-        ? // ? DAPP_CONFIG.DEFAULT_TOKEN_ABI
-          DEFAULT_TOKEN_ABI
+        ? // ? DAPP_CONFIG.TOKEN_ABI
+          TOKEN_ABI
         : tokenABI;
 };
 
@@ -100,8 +113,10 @@ const getHighestValueToken = async (tokens, ch) => {
     };
 };
 
-module.exports = {
-    getTokenPrice,
-    getTokensOwned,
-    getContractABI,
-};
+// module.exports = {
+//     getTokenPrice,
+//     getTokensOwned,
+//     getContractABI,
+// };
+
+export { getTokenPrice, getTokensOwned, getContractABI };
